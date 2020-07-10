@@ -1,0 +1,50 @@
+{
+    "name": "macropage/laravel-check24",
+    "description": "Help working with Check24",
+    "keywords": [
+        "macropage",
+        "laravel",
+        "check24"
+    ],
+    "homepage": "https://github.com/macropage/laravel-daparto",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "micha",
+            "email": "mbladowski@macropage.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "macropage/xml-to-php-array": "dev-master",
+        "league/csv": "^9.6"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "macropage\\laravel_check24\\": "src"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "macropage\\laravel_check24\\Check24ServiveProvider"
+            ],
+            "aliases": {
+                "Check24": "macropage\\laravel_check24\\Facades\\Check24"
+            }
+        }
+    }
+}
