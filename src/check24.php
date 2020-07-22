@@ -157,6 +157,7 @@ class check24 {
         while ($redo<10) {
             try {
                 $remoteContents = $adapter->listContents('outbound');
+                $redo=10;
             } catch (ConnectionRuntimeException $e) {
                 $redo++;
                 if ($redo>10) {
