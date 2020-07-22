@@ -11,6 +11,7 @@ use League\Csv\CannotInsertRecord;
 use League\Csv\EncloseField;
 use League\Csv\Exception as CsVException;
 use League\Csv\Writer;
+use League\Flysystem\ConnectionRuntimeException;
 use RuntimeException;
 use Storage;
 use XMLReader;
@@ -151,7 +152,24 @@ class check24 {
          */
         $adapter = Storage::disk('ftp.' . $this->customer . '.orders');
         $adapter->getDriver()->getAdapter()->setEnableTimestampsOnUnixListings(true);
-        $remoteContents = $adapter->listContents('outbound');
+
+        $redo = 0;
+        while ($redo<10) {
+            try {
+                $remoteContents = $adapter->listContents('outbound');
+            } catch (ConnectionRuntimeException $e) {
+                $redo++;
+                if ($redo>10) {
+                    throw new ConnectionRuntimeException($e);
+                }
+
+                echo 'connect failed: '.$this->customerConfig['orders']['ftp']['host'].' retry again in 10 seconds....'."\n";
+                sleep(10);
+            }
+        }
+
+
+
         // filter only files and only take order from within this year
         $onlyFiles = array_filter($remoteContents, fn($var) => ($var['type'] === 'file'));
         // https://github.com/thephpleague/flysystem/issues/1161
