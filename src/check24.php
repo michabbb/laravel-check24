@@ -108,7 +108,7 @@ class check24 {
         }
         $file_contents = Storage::disk('ftp.' . $this->customer . '.orders')->get($OrderFileName);
 
-        $OrderArray = $this->xml2array($file_contents, $OrderFileName);
+        $OrderArray = $this->xml2array($file_contents, str_replace('outbound/','',$OrderFileName));
         Cache::tags(['check24.' . $this->customer])->put('check24.orders.' . $this->customer . '.' . $OrderFileName, $OrderArray);
 
         return ['state' => true, 'order' => $OrderArray];
