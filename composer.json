@@ -17,9 +17,10 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^8.0 || ^8.1",
         "macropage/xml-to-php-array": "dev-master",
-        "league/csv": "^9.6"
+        "league/csv": "^9.7",
+        "ext-xmlreader": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",

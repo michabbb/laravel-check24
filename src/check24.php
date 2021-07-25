@@ -83,15 +83,9 @@ class check24 {
     }
 
     /**
-     * @param      $orderId
-     *
-     * @param bool $useCache
-     *
-     * @return array|bool|mixed[]
      * @throws FileNotFoundException
      */
-    public
-    function getSingleXMLOrder($orderId, $useCache = false) {
+    public function getSingleXMLOrder(string $orderId, bool $useCache = false): array {
         $OrderFileName = 'outbound/' . $orderId . '.xml';
 
         if ($useCache) {
@@ -123,7 +117,7 @@ class check24 {
      * @throws CannotInsertRecord
      * @throws CsVException
      */
-    public function uploadShippingData($order_number, $carrier, $shipping_number) {
+    public function uploadShippingData(string $order_number, string $carrier, string $shipping_number) {
         $csv = Writer::createFromString('');
         $csv->setDelimiter(';');
         EncloseField::addTo($csv, "\t\x1f");
@@ -209,7 +203,8 @@ class check24 {
 
     }
 
-    private function checkXMLisValid(string $string) {
+    private function checkXMLisValid(string $string): bool
+    {
         $this->xmlReader->XML($string);
         $this->xmlReader->setParserProperty(XMLReader::VALIDATE, true);
 
